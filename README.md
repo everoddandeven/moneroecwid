@@ -1,6 +1,6 @@
-# moneroecwid
+# Monero ECWID
 
-Monero Payment Gateway native integration for ECWID eCommerce
+Monero Payment Gateway integration for ECWID eCommerce
 
 # Features
 
@@ -43,3 +43,15 @@ In `functions.js` find the `initialConfig` object. It contains default user sett
 -------
 
 After that, use functions: `setValuesForPage()` and `readValuesFromPage()` to work with the page when you need to save or set values for the page.
+
+
+## Donating
+
+Please consider donating to support the development of this project.
+
+### Monero
+
+<p align="center">
+ <img src="xmr_qrcode.png" width="115" height="115" alt="xmrQrCode"/><br>
+ <code>87qmeEtvQvuELasb4ybjV4iE17KF14SKTPvhgzAwrD5k1vWZUTqsWM52pbyHy8Wb97jCkq4pm5hLKaw39pEnvUKPPf3GFJA</code>
+</p>
