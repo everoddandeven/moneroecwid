@@ -46,7 +46,7 @@ const makePayment = async (paymentData: PaymentData): Promise<PaymentResult> => 
     }
 
     // Crea il hash per la richiesta
-    const hash = await makeHash(`${id}|${terminalid}|${password}|${merchantkey}|${total}|${currency}`);
+    const hash = makeHash(`${id}|${terminalid}|${password}|${merchantkey}|${total}|${currency}`);
 
     const paymentPayload = {
       terminalId: terminalid,

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction } from 'express';
 import requestpayment from './routes/payment';
 import cors from 'cors';
 import 'dotenv/config';
@@ -25,7 +25,7 @@ app.get('/process_payment', (req, res) => {
 	// res.sendFile('/public/process.html', path.dirname(__filename));
 	res.sendFile(path.join(path.dirname(__filename), './public', 'process.html'));
 });
-app.use((err, req, res, next) => {
+app.use((err: any, req: any, res: any, next: NextFunction) => {
 	res.status(500).json({
 		error: err.message || 'unknown error',
 		errrCode: err.status || 500,

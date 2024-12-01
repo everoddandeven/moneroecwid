@@ -35,7 +35,7 @@ router.post('/', async (req, res, next) => {
             console.log(response);
 
 			if (!responseError.error) res.status(200).redirect(response);
-		} catch (err) {
+		} catch (err: any) {
 			console.log('from payment route', err.message);
 			next(err);
 		}
@@ -50,7 +50,7 @@ router.post('/validate_payment', async (req, res, next) => {
 	mer = mer.trim();
 	let hash = await makeHash(`${TranId}|${mer}|${ResponseCode || responseCode}|${amount}`);
 	let fullReturnUrl = `${UserField1}&clientId=${process.env.CLIENT_KEY}`;
-	let updateReqeust;
+	let updateRequest;
 	console.log(ResponseCode);
 	let encode = encodeURI(
 		`${fullReturnUrl}&errorMsg=${codes[ResponseCode || responseCode] || 'transaction unsucessful'}`
@@ -58,9 +58,10 @@ router.post('/validate_payment', async (req, res, next) => {
 	try {
 		if (hash === responseHash) {
 			if (Result === 'Successful' || ResponseCode === '000' || Result === 'Success') {
-				updateReqeust = await makeRequest(updateUrl, 'PUT', { paymentStatus: 'PAID' });
-				if (updateReqeust.error) {
-					console.log('to paid failed', updateReqeust, updateReqeust.body);
+				updateRequest = await makeRequest<any>(updateUrl, 'PUT', { paymentStatus: 'PAID' });
+
+				if (updateRequest.error) {
+					console.log('to paid failed', updateRequest, updateRequest.body);
 				}
 				res.status(200).json({
 					result: 'success',
@@ -68,8 +69,8 @@ router.post('/validate_payment', async (req, res, next) => {
 					urlToReturn: fullReturnUrl,
 				});
 			} else {
-				updateReqeust = await makeRequest(updateUrl, 'PUT', { paymentStatus: 'INCOMPLETE' });
-				console.log('transaction failed', updateReqeust);
+				updateRequest = await makeRequest(updateUrl, 'PUT', { paymentStatus: 'INCOMPLETE' });
+				console.log('transaction failed', updateRequest);
 				res.status(200).json({
 					result: 'failure',
 					code: 400,
