@@ -1,5 +1,9 @@
 # Monero ECWID
 
+[![Build](https://github.com/everoddandeven/monero-ecwid/actions/workflows/build.yml/badge.svg)](https://github.com/everoddandeven/monero-ecwid/actions/workflows/build.yml)
+[![License][license-badge]](LICENSE.md)
+[![XMR Donated](https://img.shields.io/badge/donated-0_XMR-blue?logo=monero)](https://github.com/everoddandeven/monero-ecwid?tab=readme-ov-file#monero)
+
 This project provides a payment integration solution for Ecwid stores using Monero as a payment method. It leverages the Monero Light Wallet Server (LWS) API for seamless integration, ensuring secure and private payments.
 
 ## Features
@@ -14,7 +18,7 @@ This project provides a payment integration solution for Ecwid stores using Mone
 
 Before you begin, make sure you have the following installed:
 
-- **Node.js** (v14 or later)
+- **Node.js** (v20 or later)
 - **Monero Light Wallet Server (LWS)**: A running instance of LWS for managing Monero transactions. You can set it up following the instructions in the [Monero LWS repository](https://github.com/vtnerd/monero-lws).
 - **Ecwid Store**: An active Ecwid store with API access enabled.
 
@@ -64,3 +68,6 @@ Please consider donating to support the development of this project.
  <img src="xmr_qrcode.png" width="115" height="115" alt="xmrQrCode"/><br>
  <code>87qmeEtvQvuELasb4ybjV4iE17KF14SKTPvhgzAwrD5k1vWZUTqsWM52pbyHy8Wb97jCkq4pm5hLKaw39pEnvUKPPf3GFJA</code>
 </p>
+
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+
