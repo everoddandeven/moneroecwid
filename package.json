@@ -4,7 +4,8 @@
   "description": "Monero Payment Gateway native integration for ECWID eCommerce",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc build.ts && node build.js && cp -R public/ dist/",
+    "start": "npm run build && node dist/app.js"
   },
   "repository": {
     "type": "git",
@@ -12,7 +13,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/everoddandeven/monero-ecwid/issues"
   },
@@ -20,6 +21,7 @@
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "node-fetch": "^3.3.2"
   },
@@ -27,6 +29,7 @@
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
-    "@types/node-fetch": "^2.6.12"
+    "@types/node-fetch": "^2.6.12",
+    "esbuild": "^0.24.0"
   }
 }
