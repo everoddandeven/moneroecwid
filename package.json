@@ -2,11 +2,12 @@
   "name": "monero-ecwid",
   "version": "1.0.0",
   "description": "Monero Payment Gateway native integration for ECWID eCommerce",
-  "main": "app.js",
+  "main": "dist/build.js",
   "scripts": {
     "build": "tsc build.ts && node build.js && cp -R public/ dist/",
     "start": "npm run build && node dist/app.js"
   },
+  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/everoddandeven/monero-ecwid.git"

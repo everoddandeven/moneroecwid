@@ -11,8 +11,7 @@ const runBuild = async () => {
       sourcemap: false,             // Genera una sourcemap per il debug
       minify: true,                // Minimizza il file per la produzione
       format: "cjs",
-      allowOverwrite: true,
-      
+      allowOverwrite: true
     });
     console.log("Build completata con successo!");
   } catch (error) {
@@ -22,5 +21,3 @@ const runBuild = async () => {
 };
 
 runBuild();
-
-export { runBuild }
