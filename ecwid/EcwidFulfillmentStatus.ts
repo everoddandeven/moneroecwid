@@ -1,0 +1,1 @@
+export type EcwidFulfillmentStatus = 'AWAITING_PROCESSING' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'WILL_NOT_DELIVER' | 'RETURNED';
