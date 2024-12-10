@@ -9,7 +9,7 @@ const runBuild = async () => {
       platform: "node",            // Target: ambiente Node.js
       target: "es2022",            // Versione JS supportata
       sourcemap: false,             // Genera una sourcemap per il debug
-      minify: true,                // Minimizza il file per la produzione
+      minify: false,                // Minimizza il file per la produzione
       format: "cjs",
       allowOverwrite: true
     });

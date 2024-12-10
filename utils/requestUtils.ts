@@ -1,5 +1,7 @@
 import fetch, { Response } from 'node-fetch';
 
+type RequestBody = Record<string, unknown>;
+
 type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
 interface RequestError {
@@ -13,15 +15,22 @@ type RequestResult<T> = T | RequestError;
 const makeRequest = async <T>(
   url: string,
   type: RequestMethod,
-  body?: Record<string, unknown>
+  body?: RequestBody,
+  authentication?: string
 ): Promise<RequestResult<T>> => {
   try {
+    const headers: { [key: string]: string } = {
+      'Content-type': 'application/json; charset=UTF-8',
+      'cache-control': 'no-cache'
+    };
+
+    if (authentication) {
+      headers['Authentication'] = authentication;
+    }
+
     const res: Response = await fetch(url, {
       method: type,
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        'cache-control': 'no-cache',
-      },
+      headers: headers,
       body: body ? JSON.stringify(body) : undefined,
     });
 
@@ -48,4 +57,4 @@ const makeRequest = async <T>(
   }
 };
 
-export { makeRequest, RequestMethod, RequestError, RequestResult };
+export { makeRequest, RequestMethod, RequestError, RequestResult, RequestBody };

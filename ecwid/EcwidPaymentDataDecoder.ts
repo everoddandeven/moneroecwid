@@ -23,7 +23,12 @@ export abstract class EcwidPaymentDataDecoder {
   private static decryptData(client_sec: string | Buffer, payload: string): Buffer | any {
     const encryption_key = Buffer.from(client_sec).subarray(0, 16); // Usato subarray per estrarre i primi 16 byte
     const originalBase64 = payload.replace(/-/g, '+').replace(/_/g, '/');
-    const algorithm: CipherAlgorithm = this.CIPHERS.AES_128_CBC;
+    const algorithm: CipherAlgorithm | undefined = this.CIPHERS.AES_128_CBC;
+
+    if (!algorithm) {
+      throw new Error('Algorithm not found');
+    }
+
     const decrypted = this.decryptText(algorithm, encryption_key, originalBase64, 'base64');
     
     try {

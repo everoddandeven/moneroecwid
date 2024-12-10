@@ -353,5 +353,4 @@ declare global {
     }
 }
 
-window.EcwidApp = EcwidApp;
 

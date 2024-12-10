@@ -88,4 +88,5 @@ router.post('/validate_payment', async (req, res, next) => {
 		next(err);
 	}
 });
+
 export default router;
