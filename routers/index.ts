@@ -1,2 +1,0 @@
-export { paymentRouter } from './paymentRouter';
-
