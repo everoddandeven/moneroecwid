@@ -1,5 +1,6 @@
 package monero.ecwid.server;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Optional;
 
@@ -73,7 +74,7 @@ public class GatewayController {
             return "error.html";
         }
         
-        BigInteger xmrAmount = request.getAmountXmr().divide(BigInteger.valueOf(1000000000000l));
+        BigDecimal xmrAmount = BigDecimal.valueOf(request.getAmountXmr().longValue()).divide(BigDecimal.valueOf(1000000000000l));
         model.addAttribute("title", "Monero Payment | Order " + txId);
         model.addAttribute("returnUrl", returnUrl);
         model.addAttribute("address", request.getAddress());
@@ -106,7 +107,7 @@ public class GatewayController {
             return "error.html";
         }
         
-        BigInteger xmrAmount = request.getAmountXmr().divide(BigInteger.valueOf(1000000000000l));
+        BigDecimal xmrAmount = BigDecimal.valueOf(request.getAmountXmr().longValue()).divide(BigDecimal.valueOf(1000000000000l));
         model.addAttribute("title", "Monero Payment | Order " + txId);
         model.addAttribute("returnUrl", returnUrl);
         model.addAttribute("address", request.getAddress());
@@ -140,7 +141,7 @@ public class GatewayController {
 
         String returnUrl = request.getReturnUrl();
 
-        BigInteger xmrAmount = request.getAmountXmr().divide(BigInteger.valueOf(1000000000000l));
+        BigDecimal xmrAmount = BigDecimal.valueOf(request.getAmountXmr().longValue()).divide(BigDecimal.valueOf(1000000000000l));
 
         model.addAttribute("returnUrl", returnUrl);
         model.addAttribute("title", "Monero Payment | Order " + id);
