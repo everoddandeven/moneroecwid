@@ -12,6 +12,12 @@ public class PaymentRequest {
     @Column(name = "tx_id", nullable = false)
     private String txId;
 
+    @Column(name = "store_id", nullable = false)
+    private Integer storeId;
+
+    @Column(name = "store_token", nullable = false)
+    private String storeToken;
+
     @Column(name = "address", nullable = false)
     private String address;
 
@@ -47,6 +53,22 @@ public class PaymentRequest {
 
     public void setTxId(String value) {
         txId = value;
+    }
+
+    public Integer getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Integer value) {
+        storeId = value;
+    }
+
+    public String getStoreToken() {
+        return storeToken;
+    }
+
+    public void setStoreToken(String value) {
+        storeToken = value;
     }
 
     public String getAddress() {

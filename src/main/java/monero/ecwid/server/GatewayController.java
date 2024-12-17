@@ -59,13 +59,15 @@ public class GatewayController {
         String txId = paymentData.cart.order.referenceTransactionId;
         Float usdTotal = paymentData.cart.order.usdTotal;
         String returnUrl = paymentData.returnUrl;
+        String token = paymentData.token;
+        Integer storeId = paymentData.storeId;
 
         logger.info("onPaymentRequest(): order id: " + orderId + ", tx id: " + txId + ", usd total: " + usdTotal);
 
         PaymentRequest request;
 
         try {
-            request = paymentRequestService.newPaymentRequest(txId, usdTotal, convertUsdToXmr(usdTotal), returnUrl);
+            request = paymentRequestService.newPaymentRequest(txId, storeId, token, usdTotal, convertUsdToXmr(usdTotal), returnUrl);
         }
         catch (Exception e) {
             logger.error(txId, e);
@@ -92,13 +94,15 @@ public class GatewayController {
         String txId = paymentData.cart.order.referenceTransactionId;
         Float usdTotal = paymentData.cart.order.usdTotal;
         String returnUrl = paymentData.returnUrl;
+        String token = paymentData.token;
+        Integer storeId = paymentData.storeId;
 
         logger.info("onPaymentRequest(): order id: " + orderId + ", tx id: " + txId + ", usd total: " + usdTotal);
 
         PaymentRequest request;
 
         try {
-            request = paymentRequestService.newPaymentRequest(txId, usdTotal, convertUsdToXmr(usdTotal), returnUrl);
+            request = paymentRequestService.newPaymentRequest(txId, storeId, token, usdTotal, convertUsdToXmr(usdTotal), returnUrl);
         }
         catch (Exception e) {
             logger.error(txId, e);

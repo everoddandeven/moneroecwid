@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import monero.ecwid.model.EcwidStoreService;
 import monero.ecwid.server.core.WalletUtils;
 import monero.wallet.MoneroWalletFull;
 import monero.wallet.model.MoneroOutputWallet;
@@ -41,11 +42,21 @@ public class PaymentRequestService {
                 long diffInMillis = Math.abs(paymentRequest.getCreatedAt().getTime() - now.getTime());
                 long diffInMinutes = diffInMillis / (60 * 1000); // Converti in minuti
                 String status = paymentRequest.getStatus();
+                String txId = paymentRequest.getTxId();
                 
                 if (status.equals("UNPAID") && diffInMinutes >= 15) {
-                    logger.info("Setting tx " + paymentRequest.getTxId() + " as expired");
-                    paymentRequest.setStatus("EXPIRED");
-                    paymentRequestService.repository.save(paymentRequest);
+                    EcwidStoreService storeService = EcwidStoreService.getService(paymentRequest.getStoreId(), paymentRequest.getStoreToken());
+                    
+                    try {
+                        storeService.setOrderCancelled(txId);
+                                        
+                        logger.info("Setting tx " + txId + " as expired");
+                        paymentRequest.setStatus("EXPIRED");
+                        paymentRequestService.repository.save(paymentRequest);
+                    }
+                    catch (Exception e) {
+                        logger.error("Could not set order cancelled", e);
+                    }
                 }
             }
         }
@@ -81,7 +92,7 @@ public class PaymentRequestService {
             logger.info("Geot req amount: " + req.getAmountXmr());
 
             if (req.getStatus().equals("UNPAID") && req.getAmountXmr().equals(amount)) {
-                req.setStatus("AWAITING");
+                req.setStatus("PAID");
             }
             else {
                 logger.info("Partially paid");
@@ -95,7 +106,19 @@ public class PaymentRequestService {
             
             // Send update status to ecwid before redirect
 
-            this.paymentRequestService.transactionRepository.save(transaction);
+            EcwidStoreService storeService = EcwidStoreService.getService(req.getStoreId(), req.getStoreToken());
+
+            try {
+                if (req.getStatus() == "PAID") {
+                    storeService.setOrderPaid(req.getTxId());
+                }
+
+                this.paymentRequestService.transactionRepository.save(transaction);
+            }
+            catch (Exception e) {
+                logger.error("Could not update order status", e);
+            }
+
         }
 
         @Override
@@ -120,7 +143,7 @@ public class PaymentRequestService {
         return this.repository.findAll();
     }
 
-    public PaymentRequest newPaymentRequest(String txId, Float amountUsd, BigInteger amountXmr, String returnUrl) throws PaymentRequestAlreadyExistsException {
+    public PaymentRequest newPaymentRequest(String txId, Integer storeId, String storeToken, Float amountUsd, BigInteger amountXmr, String returnUrl) throws PaymentRequestAlreadyExistsException {
         if (this.repository.existsById(txId)) {
             throw new PaymentRequestAlreadyExistsException(txId);
         }
@@ -136,6 +159,8 @@ public class PaymentRequestService {
         request.setAmountXmr(amountXmr);
         request.setStatus("UNPAID");
         request.setReturnUrl(returnUrl);
+        request.setStoreId(storeId);
+        request.setStoreToken(storeToken);
 
         return this.repository.save(request);
     }

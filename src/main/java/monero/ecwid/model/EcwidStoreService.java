@@ -1,12 +1,16 @@
-package monero.ecwid.server;
+package monero.ecwid.model;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONObject;
 
 public class EcwidStoreService {
+
+    private static final List<EcwidStoreService> services = new ArrayList<EcwidStoreService>();
 
     private final Integer id;
     private final String token;
@@ -69,5 +73,23 @@ public class EcwidStoreService {
 
     public String setOrderCancelled(String orderId) throws Exception {
         return updateOrderPaymentStatus(orderId, "CANCELLED");
+    }
+
+    public static EcwidStoreService getService(Integer id, String token) {
+        EcwidStoreService service = null;
+
+        for (EcwidStoreService serv : services) {
+            if (serv.id.equals(id) && serv.token.equals(token)) {
+                service = serv;
+                break;
+            }
+        }
+
+        if (service == null) {
+            service = new EcwidStoreService(id, token);
+            services.add(service);
+        }
+
+        return service;
     }
 }
