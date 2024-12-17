@@ -52,7 +52,7 @@
                         <div class="spinner-grow spinner-grow-sm" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
-                        Waiting for payment...
+                        Waiting for payment (time remaining <span id="timer">00:00</span>)...
                     </div>
 
                     <h4 class="card-title"><i class="bi bi-wallet2"></i>&nbsp;Payment Instructions</h4>
@@ -188,7 +188,7 @@
             console.log(payment);
 
             if (payment.status === 'PAID') {
-                //window.location.replace(getReturnUrl());
+                setTimeout(() => window.location.replace(getReturnUrl()), 3000);
                 hideElement('unpaidBody');
                 showElement('paidBody');
                 clearInterval(refreshInterval);
@@ -223,6 +223,27 @@
             throw err;
         }
     }
+
+    let timeRemaining = 60 * 15;
+
+    // Aggiorna il timer
+    function updateTimer() {
+        const timerElement = document.getElementById("timer");
+        const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+        const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+        timerElement.textContent = `${minutes}:${seconds}`;
+        
+        if (timeRemaining > 0) {
+            timeRemaining--;
+        } else {
+            clearInterval(timerInterval);
+            //document.querySelector('.alert').classList.replace('alert-warning', 'alert-danger');
+            //document.querySelector('.alert').textContent = 'Tempo scaduto!';
+        }
+    }
+
+    // Avvia il timer
+    let timerInterval = setInterval(updateTimer, 1000);
 
     setTimeout(() => {
         refreshInterval = setInterval(async () => {

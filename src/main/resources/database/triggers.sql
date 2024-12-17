@@ -12,7 +12,7 @@ BEGIN
     
     UPDATE `payment_requests`
     SET `status` = 'PAID'
-    WHERE `tx_id` = NEW.`tx_id` AND `amount_deposited` > `amount_xmr`;
+    WHERE `tx_id` = NEW.`tx_id` AND `amount_deposited` >= `amount_xmr`;
 END $$
 
 DELIMITER ;

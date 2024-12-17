@@ -4,6 +4,8 @@ USE `monero_ecwid`;
 
 CREATE TABLE `payment_requests` (
 	`tx_id` VARCHAR(255) NOT NULL,
+    `store_id` INT NOT NULL,
+    `store_token` TEXT NOT NULL,
 	`address` VARCHAR(255) NOT NULL,
 	`address_account_index` INT NOT NULL,
 	`address_index` INT NOT NULL,

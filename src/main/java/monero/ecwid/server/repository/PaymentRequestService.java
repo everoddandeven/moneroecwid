@@ -111,9 +111,11 @@ public class PaymentRequestService {
             try {
                 if (req.getStatus() == "PAID") {
                     storeService.setOrderPaid(req.getTxId());
+                    logger.info("Updated ECWID store");
                 }
 
                 this.paymentRequestService.transactionRepository.save(transaction);
+                this.paymentRequestService.repository.save(req);
             }
             catch (Exception e) {
                 logger.error("Could not update order status", e);
