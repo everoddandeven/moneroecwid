@@ -40,13 +40,13 @@ public class GatewayController {
     }
 
     @PostMapping(path = "/v1/monero/ecwid", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String onPayment(EcwidPaymentRequest requestBody, Model model) {
+    public String onPayment(@RequestParam String data, Model model) {
         EcwidPaymentData paymentData;
 
         try {
-            String clientSecret = "";
+            String clientSecret = "Pe087Q6jr0CgwI96R2ZTuUMWfUAHQjMq";
 
-            paymentData = EcwidPaymentDataDecoder.decode(requestBody.data, clientSecret);
+            paymentData = EcwidPaymentDataDecoder.decode(data, clientSecret);
         }
         catch(Exception e) {
             logger.error(e.getMessage());
